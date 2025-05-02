@@ -1,9 +1,7 @@
-import requests
 import os
 from typing import List, Any
 import sqlite3
 from pathlib import Path
-import json
 
 
 class DatabaseManager:

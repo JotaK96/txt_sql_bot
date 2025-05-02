@@ -2,11 +2,10 @@
 
 This agent bridges the gap between natural language questions and data visualization, allowing users to questions about a dataset and receive insightful visual representations in response. Users can upload a SQLite database or CSV file and ask questions about the data in natural language. The agent generates a SQL query based on the user's question, executes it on the database, and formats the results into a visual representation.
 
-[Video Demo](demo.mov)
 
 ## Overall Architecture
 
-The workflow is orchestrated using `LangGraph`, which provides a framework for easily building complex AI agents, a streaming API for real-time updates, and a visual studio for monitoring and experimenting with the agent's behavior. Around the LangGraph agent, the workflow uses a `SQLite Server` that supports file (SQLite and CSV) uploads under 1MB and a front-end that has prebuilt graph templates for visualization of data from LangGraph's streaming API. Once the visualization is generated, the user can also see the traces of the workflow provided by LangGraph to inspect the internal state of the agent.
+The workflow is orchestrated using `LangGraph`, which provides a framework for easily building complex AI agents, a streaming API for real-time updates, and a visual studio for monitoring and experimenting with the agent's behavior. Around the LangGraph agent, the workflow uses a  front-end that has prebuilt graph templates for visualization of data from LangGraph's streaming API. Once the visualization is generated, the user can also see the traces of the workflow provided by LangGraph to inspect the internal state of the agent.
 
 ![Workflow](flow.png)
 
@@ -50,11 +49,6 @@ This node formats the data for the chosen visualization type, which is then used
 
 ## Getting Started
 
-### Prerequisites
-
-- Following the LangGraph Studio setup, install [Docker](https://docs.docker.com/engine/install/)
-- Install [LangGraph Studio](https://github.com/langchain-ai/langgraph-studio/)
-
 ### Setup
 
 #### Backend
@@ -63,24 +57,29 @@ You can use `backend_js` or `backend_py` as your backend. If using python, for e
 
 1. **Create a `.env` file** 
 
-If using python backend, for example, you can use `backend_py/.env.example` as a template. When we load the project into LangGraph Studio, Studio will package our code with the LangGraph API and run it in a containerized Docker environment that needs access to certain environment variables provided by the `.env` file. We need the containerized LangGraph API backend to communicate with the SQLite server running on our host machine, so `host.docker.internal` resolves to the IP address of the host machine running Docker, allowing connection to the the SQLite server.
+If using python backend. When we load the project into LangGraph Studio, Studio will package our code with the LangGraph API and run it in a containerized Docker environment that needs access to certain environment variables provided by the `.env` file. 
+```
+$ echo "OPENAI_API_KEY=your_actual_openai_api_key_here
+LANGSMITH_API_KEY=your_actual_langsmith_api_key_here
+DB_NAME=ecommerce.sqlite" > backend_py/.env
+```
+
+2. **Install dependencies**
 
 ```
-$ echo "OPENAI_API_KEY=your_actual_api_key_here
-DB_ENDPOINT_URL=http://host.docker.internal:3001" > backend_py/.env
+cd backend_py
+pip3 install -r requirements.txt
 ```
 
 2. **Start Studio** 
 
-If using python locally, for example, open the `backend_py/my_agent` in your terminal and execute
+If using python locally, for example, open the `backend_py` folder in your terminal and execute
 
 ```
 langgraph dev
 ```
 
 #### Frontend
-
-After you have LangGraph Studio running locally, proceed with the frontend setup.
 
 1. **Create a `.env` file** 
 
@@ -93,22 +92,20 @@ LANGGRAPH_API_URL=xxx" > frontend/.env
 
 2. **Start the frontend** 
 ```
-$ cd frontend
 $ yarn install
 $ yarn dev
 ````
 
-Now, the frontend is running at `http://localhost:3000`. By default, you can use [this sample dataset](https://docs.google.com/spreadsheets/d/1S2mYAKwYYmjZW6jURiAfMWTVmwg74QQDfwdMUvVEgMk/edit?gid=1749607041#gid=1749607041) in the UI. But, you can also upload your own CSV or SQLite file.
+Now, the frontend is running at `http://localhost:3000`. By default, you can use [this sample dataset](https://docs.google.com/spreadsheets/d/1S2mYAKwYYmjZW6jURiAfMWTVmwg74QQDfwdMUvVEgMk/edit?gid=1749607041#gid=1749607041) in the UI.
 
 ## Usage
 
 ### Using the Frontend
 
 1. Navigate to the frontend URL (`http://localhost:3000` by default)
-2. Upload a SQLite or CSV file under 1 MB, or just ask a question using the [sample dataset](https://docs.google.com/spreadsheets/d/1S2mYAKwYYmjZW6jURiAfMWTVmwg74QQDfwdMUvVEgMk/edit?gid=1749607041#gid=1749607041)
-3. Enter a natural language query
-4. View the stream of the graph state and then the generated visualization
-5. Optionally, view the query execution traces
+2. Enter a natural language query
+3. View the stream of the graph state and then the generated visualization
+4. Optionally, view the query execution traces
 
 
 ## Contributing
