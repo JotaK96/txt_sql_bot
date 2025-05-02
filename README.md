@@ -71,13 +71,25 @@ cd backend_py
 pip3 install -r requirements.txt
 ```
 
-2. **Start Studio** 
+3. **Start Studio** 
 
 If using python locally, for example, open the `backend_py` folder in your terminal and execute
 
 ```
 langgraph dev
 ```
+
+### Create SQLite database
+
+You can use any SQLlite database. This project comes with a sample script that can create one for you:
+
+```sh
+db_creation/create-database
+```
+
+This should create a file called `ecommerce.sqlite` in the `data` directory. Here's a diagram of the database schema:
+
+![SQLite database schema](.github/db-schema.png)
 
 #### Frontend
 
