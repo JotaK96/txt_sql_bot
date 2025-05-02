@@ -57,19 +57,9 @@ This node formats the data for the chosen visualization type, which is then used
 
 ### Setup
 
-#### SQLite Server
-
-The SQLite server ([see project](https://github.com/DhruvAtreja/sqllite-server)) allows uploading of SQL and CSV files under 1MB and serves two purposes: querying the database and retrieving its schema. It converts the uploaded CSV files into a SQLite database, and assigns a UUID to the database. The uploaded databases are stored in the `sqlite_server/uploads` folder. It also uses a default database [here](https://docs.google.com/spreadsheets/d/1S2mYAKwYYmjZW6jURiAfMWTVmwg74QQDfwdMUvVEgMk/edit?gid=1749607041#gid=1749607041) if you user does not upload any file. Run these steps:
-
-```
-$ cd sqlite_server
-$ yarn install
-$ yarn start
-```
-
 #### Backend
 
-You can use `backend_js` or `backend_py` as your backend. If using python, for example, the LangGraph agent is defined in `backend_py/my_agent`. This defines the logic within each node of the SQL agent, following the steps explained above. The [LangGraph API](https://github.com/langchain-ai/langgraph-api) can be used to wrap this code, providing a back-end to our application. We can run this locally using [LangGraph Studio](https://github.com/langchain-ai/langgraph-studio), which simply involves loading the `backend_py/my_agent` folder as a project in the LangGraph Studio Desktop application. The below steps show how to run the backend locally.
+You can use `backend_js` or `backend_py` as your backend. If using python, for example, the LangGraph agent is defined in `backend_py/my_agent`. This defines the logic within each node of the SQL agent, following the steps explained above. The [LangGraph API](https://github.com/langchain-ai/langgraph-api) can be used to wrap this code, providing a back-end to our application. 
 
 1. **Create a `.env` file** 
 
@@ -82,7 +72,11 @@ DB_ENDPOINT_URL=http://host.docker.internal:3001" > backend_py/.env
 
 2. **Start Studio** 
 
-If using python locally, for example, open the `backend_py/my_agent` as a project in the LangGraph Studio desktop applications. Studio gives us direct access to the LangGraph API via a URL that is visible in the lower left corner of the Studio UI. Note that we can also use [LangGraph Cloud](https://langchain-ai.github.io/langgraph/cloud/) to deploy and host our back-end.
+If using python locally, for example, open the `backend_py/my_agent` in your terminal and execute
+
+```
+langgraph dev
+```
 
 #### Frontend
 
@@ -116,11 +110,6 @@ Now, the frontend is running at `http://localhost:3000`. By default, you can use
 4. View the stream of the graph state and then the generated visualization
 5. Optionally, view the query execution traces
 
-### Using the LangGraph Studio
-
-To use the Studio UI, simply input the question and the UUID of the database, which is `921c838c-541d-4361-8c96-70cb23abd9f5` for the [sample dataset](https://docs.google.com/spreadsheets/d/1S2mYAKwYYmjZW6jURiAfMWTVmwg74QQDfwdMUvVEgMk/edit?gid=1749607041#gid=1749607041). You can see UUIDs for all uploaded files in `sqlite_server/uploads`. Below is an example visualization on an uploaded dataset, with ID retrieved from `sqlite_server/uploads`.
-
-![Studio](studio.png)
 
 ## Contributing
 
